@@ -19,7 +19,7 @@ namespace cpr {
 
 class Response {
   private:
-    std::shared_ptr<CurlHolder> curl_{nullptr};
+//    std::shared_ptr<CurlHolder> curl_{nullptr};
 
   public:
     // Ignored here since libcurl uses a long for this.

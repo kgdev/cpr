@@ -71,6 +71,9 @@ bool ThreadPool::CreateThread() {
         return false;
     }
     std::thread* thread = new std::thread([this] {
+        std::string thread_name = ("cpr") + std::to_string(thread_count++);
+        pthread_setname_np(pthread_self(), thread_name.c_str());
+
         bool initialRun = true;
         while (status != STOP) {
             while (status == PAUSE) {

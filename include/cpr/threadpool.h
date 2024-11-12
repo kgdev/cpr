@@ -115,6 +115,7 @@ class ThreadPool {
     std::queue<Task> tasks;
     std::mutex task_mutex;
     std::condition_variable task_cond;
+    int thread_count = 0;
 };
 
 } // namespace cpr
