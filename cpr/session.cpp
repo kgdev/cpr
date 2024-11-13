@@ -86,6 +86,25 @@ Session::Session() : curl_(new CurlHolder()) {
 #endif
 }
 
+void Session::ClearCallbacks() {
+    // Clear ProgressCallback
+    progresscb_.userdata = NULL;
+    progresscb_.callback = nullptr;
+#if LIBCURL_VERSION_NUM < 0x072000 // 7.32.0
+    curl_easy_setopt(curl_->handle, CURLOPT_PROGRESSFUNCTION, NULL);
+    curl_easy_setopt(curl_->handle, CURLOPT_PROGRESSDATA, NULL);
+#else
+    curl_easy_setopt(curl_->handle, CURLOPT_XFERINFOFUNCTION, NULL);
+    curl_easy_setopt(curl_->handle, CURLOPT_XFERINFODATA, NULL);
+#endif
+    curl_easy_setopt(curl_->handle, CURLOPT_NOPROGRESS, 1L);
+    // Clear WriteCallback
+    writecb_.userdata = NULL;
+    writecb_.callback = nullptr;
+    curl_easy_setopt(curl_->handle, CURLOPT_WRITEFUNCTION, NULL);
+    curl_easy_setopt(curl_->handle, CURLOPT_WRITEDATA, NULL);
+}
+
 Response Session::makeDownloadRequest() {
     assert(curl_->handle);
 

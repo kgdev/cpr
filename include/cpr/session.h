@@ -53,6 +53,8 @@ class Session : public std::enable_shared_from_this<Session> {
     Session& operator=(Session&& old) noexcept = default;
     Session& operator=(const Session& other) = delete;
 
+    void ClearCallbacks();
+
     void SetUrl(const Url& url);
     void SetParameters(const Parameters& parameters);
     void SetParameters(Parameters&& parameters);
